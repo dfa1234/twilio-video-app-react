@@ -1,7 +1,7 @@
-import React, { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import React, { createContext, ReactNode } from 'react';
 import {
-  CreateLocalTrackOptions,
   ConnectOptions,
+  CreateLocalTrackOptions,
   LocalAudioTrack,
   LocalVideoTrack,
   Room,
@@ -50,7 +50,11 @@ interface VideoProviderProps {
   children: ReactNode;
 }
 
-export function VideoProvider({ options, children, onError = () => {}, onDisconnect = () => {} }: VideoProviderProps) {
+export function VideoProvider({
+                                options, children, onError = () => {
+  }, onDisconnect = () => {
+  },
+                              }: VideoProviderProps) {
   const onErrorCallback = (error: TwilioError) => {
     console.log(`ERROR: ${error.message}`, error);
     onError(error);
