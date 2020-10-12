@@ -43,6 +43,12 @@ context('A video app user', () => {
       cy.getParticipant('testuser').should('contain', 'testuser');
     });
 
+    it('should open the chat window', () => {
+      cy.get('footer').should('contain', 'Open Chat');
+      cy.get('Open Chat').click();
+      //TODO to complete but it's stuck currently on passcode step
+    });
+
     it('should be able to see the other participant', () => {
       cy.get('[data-cy-main-participant]').should('contain', 'test1');
       cy.getParticipant('test1')
