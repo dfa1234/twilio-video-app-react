@@ -2,6 +2,8 @@ import React from 'react';
 import ParticipantList from '../ParticipantList/ParticipantList';
 import { styled } from '@material-ui/core/styles';
 import MainParticipant from '../MainParticipant/MainParticipant';
+import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
+import { ChatContent } from '../ChatContent/ChatContent';
 
 const Container = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -15,11 +17,16 @@ const Container = styled('div')(({ theme }) => ({
   },
 }));
 
+
 export default function Room() {
+
+  const { isChatEnabled } = useVideoContext();
+
   return (
     <Container>
       <MainParticipant />
       <ParticipantList />
+      {isChatEnabled && <ChatContent />}
     </Container>
   );
 }

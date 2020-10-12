@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode } from 'react';
+import React, { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import {
   CreateLocalTrackOptions,
   ConnectOptions,
@@ -38,6 +38,8 @@ export interface IVideoContext {
   removeLocalVideoTrack: () => void;
   isSharingScreen: boolean;
   toggleScreenShare: () => void;
+  isChatEnabled: boolean;
+  toggleChatList: Dispatch<SetStateAction<boolean>>;
   getAudioAndVideoTracks: () => Promise<void>;
 }
 
@@ -71,11 +73,14 @@ export function VideoProvider({ options, children, onError = () => {}, onDisconn
   useHandleTrackPublicationFailed(room, onError);
   useHandleOnDisconnect(room, onDisconnect);
   const [isSharingScreen, toggleScreenShare] = useScreenShareToggle(room, onError);
+  const [isChatEnabled, toggleChatList] = useState(false);
 
   return (
     <VideoContext.Provider
       value={{
         room,
+        isChatEnabled,
+        toggleChatList,
         localTracks,
         isConnecting,
         onError: onErrorCallback,

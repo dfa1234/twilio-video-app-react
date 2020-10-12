@@ -12,6 +12,7 @@ import { Typography, Grid, Hidden } from '@material-ui/core';
 import ToggleAudioButton from '../Buttons/ToggleAudioButton/ToggleAudioButton';
 import ToggleVideoButton from '../Buttons/ToggleVideoButton/ToggleVideoButton';
 import ToggleScreenShareButton from '../Buttons/ToogleScreenShareButton/ToggleScreenShareButton';
+import ToggleChatButton from '../Buttons/ToggleChatButton/ToggleChatButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,6 +89,7 @@ export default function MenuBar() {
             <Grid container justify="center">
               <ToggleAudioButton disabled={isReconnecting} />
               <ToggleVideoButton disabled={isReconnecting} />
+              <ToggleChatButton />
               <Hidden smDown>{!isSharingScreen && <ToggleScreenShareButton disabled={isReconnecting} />}</Hidden>
               <FlipCameraButton />
             </Grid>
