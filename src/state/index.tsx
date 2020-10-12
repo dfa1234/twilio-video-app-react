@@ -16,6 +16,7 @@ export interface StateContextType {
   isAuthReady?: boolean;
   isFetching: boolean;
   activeSinkId: string;
+  token:string;
   setActiveSinkId(sinkId: string): void;
   settings: Settings;
   dispatchSetting: React.Dispatch<SettingsAction>;
@@ -38,6 +39,7 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
   const [isFetching, setIsFetching] = useState(false);
   const [activeSinkId, setActiveSinkId] = useState('default');
   const [settings, dispatchSetting] = useReducer(settingsReducer, initialSettings);
+  const [token, setToken] = useState('');
 
   let contextValue = {
     error,
@@ -47,6 +49,7 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     setActiveSinkId,
     settings,
     dispatchSetting,
+    token,
   } as StateContextType;
 
   if (process.env.REACT_APP_SET_AUTH === 'firebase') {
@@ -78,6 +81,7 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
       .getToken(name, room)
       .then(res => {
         setIsFetching(false);
+        setToken(res);
         return res;
       })
       .catch(err => {

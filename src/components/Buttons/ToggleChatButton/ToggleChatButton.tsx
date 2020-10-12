@@ -1,10 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import Button from '@material-ui/core/Button';
-import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
+import useChatContext from '../../../hooks/useChatContext/useChatContext';
 
 export default function ToggleChatButton(props: { disabled?: boolean; className?: string }) {
 
-  const { isChatEnabled, toggleChatList } = useVideoContext();
+  const { isChatEnabled, toggleChatList } = useChatContext();
 
   const toggleChat = useCallback(() => {
     toggleChatList(!isChatEnabled);

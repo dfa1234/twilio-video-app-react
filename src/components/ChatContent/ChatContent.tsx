@@ -4,6 +4,7 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import usePasscodeAuth, { fetchToken, getPasscode } from '../../state/usePasscodeAuth/usePasscodeAuth';
 import Chat from 'twilio-chat';
 import { useAppState } from '../../state';
+import useChatContext from '../../hooks/useChatContext/useChatContext';
 
 
 const ChatList = styled('div')(({ theme }) => ({
@@ -20,40 +21,18 @@ const ChatList = styled('div')(({ theme }) => ({
 
 export const ChatContent: FC<any> = () => {
 
-  const { room, isChatEnabled } = useVideoContext();
-  const { user } = useAppState();
-
-  const passcodeAuth = usePasscodeAuth();
+  const { room } = useVideoContext();
+  const { isChatEnabled } = useChatContext();
+  const { user, token } = useAppState();
 
   let chatClient = null;
 
   useEffect(() => {
-    fetchToken(user?.displayName || '', room.name, getPasscode() || '')
-      .then(async res => {
-        if (res.ok) {
-          return res;
-        }else{
-          throw `Can't get passcode`;
-        }
-      })
-      .then(res => res.json())
-      .then(res => {
-        return res.token as string;
-      })
-      .then(
-        token => {
-          console.log(token);
-          return (Chat as any).Client.create(token);
-        },
-      )
-      .then((client: any) => {
-        console.log(client);
-        chatClient = client;
-      })
-      .catch(error => console.error(error));
-
-
-  }, [passcodeAuth]);
+    (async function anyNameFunction() {
+      chatClient = await Chat.create(token);
+      console.log(chatClient);
+    })();
+  }, [token]);
 
   return (<ChatList>
     <p>
